@@ -1,4 +1,5 @@
-import { Route } from "express";
+import { Router } from "express";
+import {setShortenLink, getUrlId, getOpenShortUrl, deleteUrl } from '../controllers/urlController.js'
 
 const urlRouter = Router();
 

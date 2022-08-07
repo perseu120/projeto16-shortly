@@ -1,6 +1,7 @@
-import { Route } from "express";
+import { Router } from "express";
+import {getUsers, getRanking} from '../controllers/visitLinkController.js'
 
-const visitLinkRouter = Route();
+const visitLinkRouter = Router();
 
 visitLinkRouter.get('/users/me', getUsers);
 visitLinkRouter.get('/ranking', getRanking);
