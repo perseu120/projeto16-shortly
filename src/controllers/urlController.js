@@ -20,7 +20,17 @@ export async function getUrlId(req, res){
 }
 
 export async function getOpenShortUrl(req, res){
+    
+    const {shortUrl} = req.params;
+    
+    const {rows: link} = await connection.query('SELECT "longLink" FROM links WHERE "shortLink" = $1', [shortUrl]);
+    
+    if(link.length < 1){
+        res.sendStatus(404);
+        return;
+    }
 
+    res.redirect(link[0].longLink);
 }
 
 export async function deleteUrl(req, res){
