@@ -6,6 +6,7 @@ export default function validateLogin(req, res, next){
 
     if(userValidate.error){
         res.status(422).send(`${userValidate.error.message}`);
+        return;
     }
 
     next();
