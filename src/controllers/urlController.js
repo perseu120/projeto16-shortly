@@ -46,9 +46,27 @@ export async function getOpenShortUrl(req, res){
 
 export async function deleteUrl(req, res){
     
-    //pegar o id do usuario que vem pelo token
-    //e proucura o link pelo id passado pela rota
-    // e comprara se o id so usuario é igual o idusuario que tem na tabela de links
-    //se for apagar o link
+    const {id} = req.params;
 
+    const idUsers = res.locals.idUsers;
+
+    const{rows:idUser} = await connection.query('SELECT "idUsers" FROM links WHERE id = $1',[id]);
+    
+    if(idUser.length <1){
+
+        res.status(404).send("link não encontrado");
+        return;
+    }
+
+    if(idUser[0].idUsers === idUsers){
+
+        await connection.query(' DELETE FROM links WHERE id = $1 AND "idUsers" = $2',[id, idUsers]);
+        res.status(204).send("link apagado com sucesso");
+        return
+    }else{
+        res.status(401).send("link apagado com sucesso");
+        return;
+    }
+     
+    
 }
