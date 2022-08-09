@@ -12,7 +12,7 @@ export async function setRegistration(req, res){
 
     const {rows:result} = await connection.query('SELECT email FROM users WHERE email = $1', [email]);
 
-    if(result){
+    if(result.length > 0){
         res.status(409).send("email já cadastrado");
         return;
     }
@@ -48,8 +48,7 @@ export async function setLogin(req, res){
         await connection.query('INSERT INTO sessions (token, "idUsers") VALUES ($1, $2)', [token, user[0].id ]);
 
         res.status(200).send(token);
+        return;
     };
-
-    console.log("tudo certo na bahia");
     
 }
